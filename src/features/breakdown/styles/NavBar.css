@@ -1,0 +1,43 @@
+.ur-navbar {
+    background-color: #0f172a; /* Głęboki granat */
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 64px;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.ur-nav-brand {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #60a5fa; /* Jasnoniebieski BGS */
+}
+
+.ur-nav-brand span {
+    color: #ffffff; /* Białe ::UR */
+}
+
+.ur-nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.ur-nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.ur-nav-links a:hover {
+    color: #ffffff;
+}
+
+.ur-nav-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+}
