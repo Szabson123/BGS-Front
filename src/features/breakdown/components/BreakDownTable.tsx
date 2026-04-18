@@ -78,7 +78,6 @@ export const BreakdownTable: React.FC<BreakdownTableProps> = ({ data, isLoading,
             <div>Uwagi z naprawy</div>
             <div>Rozpoczęcie</div> 
             <div>Interwencja</div>
-            {/* NOWA KOLUMNA W NAGŁÓWKU */}
             <div>Czas trwania</div>
             <div>Akcja</div>
           </div>
@@ -108,7 +107,6 @@ export const BreakdownTable: React.FC<BreakdownTableProps> = ({ data, isLoading,
 
             const statusDescription = item.latest_status.description || '-';
             
-            // OBLICZAMY CZAS TRWANIA
             const durationStr = calculateDuration(item.date_added, item.latest_status.status, item.latest_status.time);
 
             return (

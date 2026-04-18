@@ -1,5 +1,5 @@
 .ur-navbar {
-    background-color: #0f172a; /* Głęboki granat */
+    background-color: #0f172a;
     color: #ffffff;
     display: flex;
     justify-content: space-between;
@@ -13,11 +13,11 @@
 .ur-nav-brand {
     font-size: 1.3em;
     font-weight: 600;
-    color: #60a5fa; /* Jasnoniebieski BGS */
+    color: #60a5fa;
 }
 
 .ur-nav-brand span {
-    color: #ffffff; /* Białe ::UR */
+    color: #ffffff;
 }
 
 .ur-nav-links {

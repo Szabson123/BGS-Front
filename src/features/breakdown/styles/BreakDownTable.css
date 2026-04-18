@@ -1,5 +1,4 @@
 :root {
-    /* Surowa, techniczna paleta */
     --bd-bg-color: #f3f4f6;
     --bd-card-bg: #ffffff;
     --bd-primary-blue: #1d4ed8;
@@ -9,7 +8,6 @@
     --bd-text-muted: #6b7280;
     --bd-border-color: #e5e7eb;
 
-    /* Techniczne kolory priorytetów */
     --bd-prio-high-bg: #fee2e2;
     --bd-prio-high-text: #991b1b;
     --bd-prio-high-border: #fca5a5;
@@ -22,7 +20,6 @@
     --bd-prio-low-text: #166534;
     --bd-prio-low-border: #86efac;
 
-    /* Kolory statusów dla 15px paska */
     --bd-status-rp-color: #9c0000;
     --bd-status-st-color: #cc8500;
     --bd-status-ed-color: #007a33;
@@ -56,11 +53,10 @@
     gap: 10px;
 }
 
-/* --- Lista Zgłoszeń --- */
 .bd-ticket-list {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Ciaśniejszy układ */
+    gap: 8px;
     padding-bottom: 40px;
 }
 
