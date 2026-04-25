@@ -4,6 +4,9 @@ import { ProtectedRoute } from './features/auth/ProtectedRoute';
 import { URLayout } from './features/breakdown/URLayout';
 import BreakdownsPage from './features/breakdown/views/BreakdownsView';
 import LoginPage from './features/auth/views/LoginView';
+import MachineList from './features/breakdown/views/MachineList';
+import CreateBreakdown from './features/breakdown/views/CrateBreakDown';
+
 
 function App() {
   return (
@@ -20,6 +23,8 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/ur" element={<URLayout />}>
               <Route path="breakdowns" element={<BreakdownsPage />} />
+              <Route path="machines" element={<MachineList />} />
+              <Route path="create-breakdown" element={<CreateBreakdown />} />
             </Route>
           </Route>
 

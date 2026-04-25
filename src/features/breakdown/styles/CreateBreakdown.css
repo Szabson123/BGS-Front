@@ -1,0 +1,201 @@
+.cb-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f9;
+    height: calc(100vh - 64px);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.cb-card {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border-top: 6px solid #dc2626;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.cb-title {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    color: #1e293b;
+    text-align: center;
+    font-weight: 600;
+}
+
+.cb-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+    min-height: 0;
+}
+
+.cb-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cb-group-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1; 
+    min-height: 0;
+}
+
+.cb-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cb-search {
+    padding: 10px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s;
+    background-color: #fcfcfc;
+}
+
+.cb-search:focus {
+    border-color: #4f46e5;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.cb-textarea {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: none;
+    outline: none;
+    height: 90px;
+    min-height: 90px;
+    background-color: #fcfcfc;
+    transition: all 0.2s;
+}
+
+.cb-textarea:focus {
+    border-color: #4f46e5;
+    background-color: white;
+}
+
+.cb-custom-listbox {
+    max-height: 367px;
+    overflow-y: auto;
+    border: 1px solid var(--mch-border, #e2e8f0);
+    border-radius: 6px;
+    background-color: #ffffff;
+    margin-top: 8px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.cb-listbox-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--mch-border, #e2e8f0);
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.cb-listbox-item:last-child {
+    border-bottom: none;
+}
+
+.cb-listbox-item:hover:not(.disabled):not(.selected) {
+    background-color: #f1f5f9;
+}
+
+.cb-listbox-item.selected {
+    background-color: var(--mch-accent, #6366f1);
+    color: #ffffff;
+}
+
+.cb-listbox-item.selected .mch-name,
+.cb-listbox-item.selected .mch-alias {
+    color: #ffffff;
+}
+
+.cb-listbox-item.disabled {
+    cursor: not-allowed;
+    color: var(--mch-text-muted, #94a3b8);
+    justify-content: center;
+    font-style: italic;
+    background-color: #f8fafc;
+}
+
+.cb-custom-listbox::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cb-custom-listbox::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 0 6px 6px 0;
+}
+
+.cb-custom-listbox::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.cb-custom-listbox::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.cb-submit-btn {
+    background-color: #dc2626;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cb-submit-btn:hover {
+    background-color: #b91c1c;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+.cb-submit-btn:disabled {
+    background-color: #f87171;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.cb-alert {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.cb-alert-success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+.cb-alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
