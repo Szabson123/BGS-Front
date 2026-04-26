@@ -1,0 +1,318 @@
+.rc-wrapper {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bd-card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--bd-border-color);
+  margin: 0 10px;
+}
+
+/* HEADER - Nawigacja i filtry */
+.rc-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--bd-border-color);
+}
+
+.rc-navigators {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.rc-navigators svg {
+  cursor: pointer;
+  color: var(--bd-text-muted);
+  font-size: 1.2rem;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.rc-navigators svg:hover {
+  background-color: var(--bd-bg-color);
+  color: var(--bd-primary-blue);
+}
+
+.rc-filters-days {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--bd-text-main);
+}
+
+/* Przełącznik Tydzień / Miesiąc */
+.rc-type-select {
+  display: flex;
+  background-color: var(--bd-bg-color);
+  padding: 4px;
+  border-radius: 6px;
+  gap: 4px;
+}
+
+.rc-type-button {
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--bd-text-muted);
+  transition: all 0.2s;
+}
+
+.rc-type-button.selected {
+  background-color: #ffffff;
+  color: var(--bd-primary-blue);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* TOP BAR - Daty i dni tygodnia */
+.rc-top {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--bd-border-color);
+  margin-left: 0;
+  &.before {
+    grid-template-columns: 80px repeat(7, 1fr);
+  }
+}
+
+/* Pusty narożnik nad godzinami */
+.rc-top.before::before {
+  content: "";
+  border-right: 1px solid var(--bd-border-color);
+}
+
+.rc-top-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  border-right: 1px solid var(--bd-border-color);
+}
+
+.rc-top-day:last-child {
+  border-right: none;
+}
+
+.rc-top-day.selected {
+  background-color: rgba(29, 78, 216, 0.05);
+}
+
+.rc-day {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--bd-text-main);
+}
+
+.rc-top-day.selected .rc-day {
+  color: var(--bd-primary-blue);
+}
+
+.rc-week-day {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--bd-text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* GRID - Siatka godzin i dni */
+.rc-day-grid-wrapper {
+  display: flex;
+  position: relative;
+  overflow-y: auto;
+  max-height: 700px; /* Stała wysokość kalendarza */
+  scrollbar-width: none;
+  &.month {
+    display: block;
+    overflow-y: visible;
+    max-height: 740px;
+  }
+}
+
+/* Kolumna z godzinami */
+.rc-hours-label {
+  width: 80px;
+  flex-shrink: 0;
+  background-color: #ffffff;
+}
+
+.rc-hour {
+  height: 60px; /* Wysokość każdej godziny */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.rc-hour span {
+  font-size: 0.75rem;
+  color: var(--bd-text-muted);
+  font-weight: 500;
+}
+
+/* Główna siatka */
+.rc-grid-wrapper {
+  flex-grow: 1;
+  position: relative;
+  background-color: #ffffff;
+  flex-direction: column;
+  min-height: min-content;
+}
+
+/* Linie poziome (Wiersze godzin) */
+.rc-row {
+  height: 60px;
+  width: 100%;
+  border-bottom: 1px solid var(--bd-border-color);
+  box-sizing: border-box;
+}
+
+/* Linie pionowe (Dni tygodnia) */
+.rc-vertical-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--bd-border-color);
+  pointer-events: none; /* Żeby nie blokowało klikania w grid */
+}
+
+/* Scrollbar styling (opcjonalnie, dla lepszego wyglądu) */
+/* .rc-day-grid-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.rc-day-grid-wrapper::-webkit-scrollbar-track {
+    background: var(--bd-bg-color);
+}
+
+.rc-day-grid-wrapper::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.rc-day-grid-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+} */
+
+.rc-element {
+  background-color: var(--bd-prio-high-bg); /* Przykładowy kolor */
+  border-left: 4px solid var(--bd-prio-high-border);
+  color: var(--bd-prio-high-text);
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  box-sizing: border-box;
+  pointer-events: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 10;
+  opacity: 0;
+  animation: showUp 0.2s ease-out forwards;
+}
+
+@keyframes showUp {
+  to {
+    opacity: 1;
+  }
+}
+
+.rc-current-time-line {
+  position: absolute;
+  width: calc(100% - 5px);
+  height: 2px;
+  background-color: rgb(255, 45, 8);
+  z-index: 11;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: rgb(255, 45, 8);
+  }
+}
+
+/* month */
+
+.rc-month-grid {
+  display: grid;
+  width: 100%;
+  height: 1000px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  max-height: 740px;
+}
+.rc-month-cell {
+  border: 1px solid var(--bd-border-color);
+  padding: 10px;
+  font-size: 22px;
+  color: var(--bd-text-main);
+  font-weight: 600;
+  &.grey {
+    color: var(--bd-text-muted);
+    font-weight: 300;
+  }
+  &.today {
+    border: 2px solid var(--bd-primary-blue);
+    color: var(--bd-primary-blue);
+  }
+}
+.rc-month-cell {
+  display: flex;
+  flex-direction: column;
+  min-height: 120px; /* Stała wysokość komórki */
+  overflow: hidden;
+}
+
+.rc-month-day-header {
+  margin-bottom: 4px;
+}
+
+.rc-month-events-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rc-month-event-strip {
+  background-color: var(
+    --bd-primary-blue-light,
+    #e3f2fd
+  ); /* Przykładowy kolor */
+  border-left: 3px solid var(--bd-primary-blue, #2196f3);
+  padding: 2px 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 2px;
+  color: var(--bd-text-main);
+  cursor: pointer;
+}
+
+.rc-event-name {
+  font-weight: 500;
+}
+
+.rc-month-more-events {
+  font-size: 10px;
+  color: var(--bd-text-muted);
+  padding-left: 4px;
+  font-weight: bold;
+}
+.rc-event-time{
+  font-weight: 700;
+}

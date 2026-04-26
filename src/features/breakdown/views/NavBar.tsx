@@ -13,6 +13,7 @@ export const Navbar: React.FC = () => {
         <Link to="/ur/breakdowns">Strona Główna</Link>
         <Link to="/ur/machines">Maszyny</Link>
         <Link to="/ur/breakdown-raport">Wszystkie Awarie</Link>
+        <Link to="/ur/review-calendar">Przeglądy</Link>
       </div>
 
       <div className="ur-nav-user">

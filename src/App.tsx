@@ -8,6 +8,8 @@ import MachineList from './features/breakdown/views/MachineList';
 import CreateBreakdown from './features/breakdown/views/CrateBreakdown';
 import MachineHistoryView from './features/breakdown/views/MachineHistoryView';
 import BreakdownRaport from './features/breakdown/views/BreakdownRaport';
+import CalendarPage from './features/breakdown/views/ReviewCalendarView';
+
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
               <Route path="machines/:id/history" element={<MachineHistoryView />} />
               <Route path="create-breakdown" element={<CreateBreakdown />} />
               <Route path="breakdown-raport" element={<BreakdownRaport />} />
+              <Route path="review-calendar" element={<CalendarPage />} />
             </Route>
           </Route>
 
