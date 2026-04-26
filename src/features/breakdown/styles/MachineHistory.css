@@ -1,0 +1,265 @@
+/* Wykorzystujemy Twoje zmienne z :root z poprzednich plików */
+
+.mh-wrapper {
+    font-family: 'Poppins', sans-serif;
+    color: var(--bd-text-main);
+    width: 100%;
+}
+
+.mh-container {
+    width: 100%;
+    background-color: var(--bd-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.mh-header-title {
+    color: var(--bd-text-main);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 1.4em;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.mh-subtitle {
+    font-weight: 400;
+    color: var(--bd-text-muted);
+    font-size: 0.7em;
+}
+
+.mh-loader, .mh-error {
+    padding: 20px;
+    text-align: center;
+    color: var(--bd-text-muted);
+    background: #fff;
+    border-radius: 8px;
+}
+
+/* Struktura Listy */
+.mh-list {
+    background: var(--bd-card-bg);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid var(--bd-border-color);
+    overflow: hidden;
+}
+
+.mh-empty {
+    padding: 20px;
+    text-align: center;
+    color: var(--bd-text-muted);
+}
+
+/* Układ Grid dla nagłówka i wiersza */
+.mh-list-header, .mh-item-summary {
+    display: grid;
+    grid-template-columns: 60px 180px 120px 1fr 40px;
+    align-items: center;
+    padding: 12px 20px;
+    gap: 15px;
+}
+
+.mh-list-header {
+    background-color: #f8fafc;
+    font-weight: 600;
+    font-size: 0.75em;
+    color: var(--bd-text-muted);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--bd-border-color);
+    letter-spacing: 0.5px;
+}
+
+.mh-item {
+    border-bottom: 1px solid var(--bd-border-color);
+}
+.mh-item:last-child {
+    border-bottom: none;
+}
+
+.mh-item-summary {
+    cursor: pointer;
+    transition: background-color 0.2s;
+    list-style: none; /* Ukrywa domyślną strzałkę */
+}
+.mh-item-summary::-webkit-details-marker {
+    display: none;
+}
+.mh-item-summary:hover {
+    background-color: #f8fafc;
+}
+
+.mh-col-id { font-weight: 600; color: var(--bd-primary-blue); }
+.mh-col-date { font-size: 0.9em; font-weight: 500; }
+.mh-time-muted { color: var(--bd-text-muted); font-size: 0.9em; margin-left: 4px; }
+.mh-text-muted { color: var(--bd-text-muted); }
+
+/* Odznaki priorytetów (korzystają z Twoich kolorów) */
+.mh-badge {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+}
+.mh-prio-wysoki { background-color: var(--bd-prio-high-bg); color: var(--bd-prio-high-text); border: 1px solid var(--bd-prio-high-border); }
+.mh-prio-sredni { background-color: var(--bd-prio-med-bg); color: var(--bd-prio-med-text); border: 1px solid var(--bd-prio-med-border); }
+.mh-prio-niski  { background-color: var(--bd-prio-low-bg); color: var(--bd-prio-low-text); border: 1px solid var(--bd-prio-low-border); }
+.mh-prio-brak   { background-color: var(--bd-bg-color); color: var(--bd-text-muted); border: 1px solid var(--bd-border-color); }
+
+/* Pigułki statusów */
+.mh-status-pill {
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: 0.8em;
+    font-weight: 600;
+    display: inline-block;
+}
+.mh-status-rp { background-color: #fee2e2; color: var(--bd-status-rp-color); border: 1px solid #fca5a5; }
+.mh-status-st { background-color: #fef3c7; color: var(--bd-status-st-color); border: 1px solid #fcd34d; }
+.mh-status-ed { background-color: #dcfce7; color: var(--bd-status-ed-color); border: 1px solid #86efac; }
+.mh-status-default { background-color: #f3f4f6; color: var(--bd-text-muted); border: 1px solid var(--bd-border-color); }
+
+/* Ikona rozwijania */
+.mh-col-action {
+    text-align: right;
+}
+.mh-toggle-icon::before {
+    content: "▼";
+    display: inline-block;
+    font-size: 0.8em;
+    color: var(--bd-text-muted);
+    transition: transform 0.3s ease;
+}
+details[open] .mh-toggle-icon::before {
+    transform: rotate(180deg);
+}
+
+/* --- ROZWINIĘTE SZCZEGÓŁY --- */
+.mh-item-details {
+    padding: 20px;
+    background-color: #fafaf9;
+    border-top: 1px dashed var(--bd-border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Główny opis awarii */
+.mh-main-info {
+    background-color: var(--bd-card-bg);
+    border: 1px solid var(--bd-border-color);
+    border-radius: 6px;
+    padding: 16px;
+}
+
+.mh-info-header {
+    font-size: 0.85em;
+    color: var(--bd-text-muted);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--bd-bg-color);
+}
+
+.mh-long-description {
+    font-size: 0.9em;
+    line-height: 1.5;
+    color: var(--bd-text-main);
+    white-space: pre-wrap; /* Zachowuje entery */
+}
+
+/* --- PIONOWY DZIENNIK ZDARZEŃ --- */
+.mh-history-log h4 {
+    font-size: 0.85em;
+    color: var(--bd-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    margin-top: 0;
+}
+
+.mh-timeline {
+    position: relative;
+    padding-left: 24px;
+}
+
+/* Główna linia osi czasu */
+.mh-timeline::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    bottom: 0;
+    left: 7px;
+    width: 2px;
+    background-color: var(--bd-border-color);
+}
+
+.mh-timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+.mh-timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Kropki na osi czasu */
+.mh-timeline-dot {
+    position: absolute;
+    left: -22px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px #fafaf9; /* Tło z container-a, żeby odciąć linię */
+}
+.mh-dot-rp { background-color: var(--bd-status-rp-color); }
+.mh-dot-st { background-color: var(--bd-status-st-color); }
+.mh-dot-ed { background-color: var(--bd-status-ed-color); }
+.mh-dot-default { background-color: var(--bd-text-muted); }
+
+.mh-timeline-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.mh-hist-status {
+    font-weight: 700;
+    font-size: 0.85em;
+    color: var(--bd-text-main);
+}
+.mh-hist-time, .mh-hist-user {
+    font-size: 0.8em;
+    color: var(--bd-text-muted);
+}
+
+.mh-hist-desc {
+    background-color: var(--bd-card-bg);
+    border: 1px solid var(--bd-border-color);
+    border-left: 3px solid var(--bd-border-color);
+    padding: 10px 14px;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.85em;
+    line-height: 1.4;
+    color: var(--bd-text-main);
+    display: inline-block;
+    max-width: 100%;
+    white-space: pre-wrap;
+}
+
+.mh-hist-empty {
+    font-size: 0.8em;
+    color: #9ca3af;
+    font-style: italic;
+}

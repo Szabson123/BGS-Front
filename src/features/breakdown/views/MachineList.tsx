@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import '../styles/MachineList.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Machine {
   id: number;
@@ -21,6 +22,7 @@ export const MachineList: React.FC = () => {
 
   const fetchedUrls = useRef<Set<string>>(new Set());
   const observer = useRef<IntersectionObserver | null>(null);
+  const navigate = useNavigate();
 
   const fetchMoreData = async (url: string) => {
     if (fetchedUrls.current.has(url)) return;
@@ -101,7 +103,12 @@ export const MachineList: React.FC = () => {
                 {machine.alias || <span className="mch-alias-empty">brak aliasu</span>}
               </div>
               <div className="mch-actions">
-                <button className="mch-btn btn-breakdown" onClick={() => console.log('Awarie', machine.id)}>🚨 Awarie</button>
+                <button 
+                  className="mch-btn btn-breakdown" 
+                  onClick={() => navigate(`/ur/machines/${machine.id}/history`)}
+                >
+                  🚨 Awarie
+                </button>
                 <button className="mch-btn btn-analysis" onClick={() => console.log('Analiza', machine.id)}>📊 Analiza</button>
                 <button className="mch-btn btn-notes" onClick={() => console.log('Notatki/Pliki', machine.id)}>📝 Notatki i Pliki</button>
               </div>

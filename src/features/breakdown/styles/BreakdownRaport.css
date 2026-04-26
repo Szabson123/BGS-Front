@@ -1,0 +1,157 @@
+:root {
+    --ar-bg-color: #f3f4f6;
+    --ar-card-bg: #ffffff;
+    --ar-primary-blue: #1d4ed8;
+    --ar-primary-blue-hover: #1e40af;
+    --ar-navbar-bg: #1e293b;
+    --ar-text-main: #1f2937;
+    --ar-text-muted: #6b7280;
+    --ar-border-color: #e5e7eb;
+
+    --ar-prio-high-bg: #fee2e2;
+    --ar-prio-high-text: #991b1b;
+    --ar-prio-high-border: #fca5a5;
+
+    --ar-prio-med-bg: #fef3c7;
+    --ar-prio-med-text: #92400e;
+    --ar-prio-med-border: #fcd34d;
+
+    --ar-prio-low-bg: #dcfce7;
+    --ar-prio-low-text: #166534;
+    --ar-prio-low-border: #86efac;
+
+    --ar-status-rp-color: #9c0000;
+    --ar-status-st-color: #cc8500;
+    --ar-status-ed-color: #007a33;
+}
+
+.ar-wrapper {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--ar-bg-color);
+    color: var(--ar-text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ar-container {
+    width: 100%;
+    max-width: none;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+.ar-header-title {
+    color: var(--ar-text-main);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 1.4em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ar-ticket-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0; 
+    padding-bottom: 40px;
+    min-width: 1800px;
+    background-color: var(--ar-card-bg);
+    border: 1px solid var(--ar-border-color);
+    border-radius: 4px;
+}
+
+.ar-ticket-header, .ar-ticket-card {
+    display: grid;
+    grid-template-columns: 0.8fr 0.6fr 0.8fr 0.6fr 1fr 2fr 0.7fr 1.5fr 1.5fr 0.8fr 1fr 1fr 0.7fr;
+    gap: 15px;
+}
+
+.ar-ticket-header {
+    margin-left: 0;
+    padding: 12px 20px;
+    font-weight: 600;
+    color: var(--ar-text-muted);
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--ar-border-color);
+    background-color: #f8fafc;
+}
+
+.ar-ticket-card {
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--ar-border-color);
+    transition: background-color 0.2s ease;
+}
+
+.ar-ticket-card:last-child {
+    border-bottom: none;
+}
+
+.ar-ticket-card:hover {
+    background-color: #f8fafc;
+}
+
+.ar-machine-name { 
+    font-weight: 600; 
+    color: var(--ar-primary-blue); 
+    font-size: 0.95em;
+}
+
+.ar-time { 
+    color: #4b5563;
+    font-size: 0.85em; 
+    font-weight: 500; 
+}
+
+.ar-description {
+    font-size: 0.85rem;
+    color: var(--ar-text-main);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    word-break: break-all;
+    white-space: nowrap;
+    cursor: help;
+}
+
+.ar-person { 
+    font-size: 0.85em; 
+    font-weight: 500; 
+}
+
+.ar-duration {
+    font-weight: 600;
+    color: var(--ar-primary-blue);
+    font-size: 0.9em;
+}
+
+.ar-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+
+.ar-prio-wysoki { background-color: var(--ar-prio-high-bg); color: var(--ar-prio-high-text); border: 1px solid var(--ar-prio-high-border); }
+.ar-prio-sredni { background-color: var(--ar-prio-med-bg); color: var(--ar-prio-med-text); border: 1px solid var(--ar-prio-med-border); }
+.ar-prio-niski  { background-color: var(--ar-prio-low-bg); color: var(--ar-prio-low-text); border: 1px solid var(--ar-prio-low-border); }
+.ar-prio-brak   { background-color: var(--ar-text-muted); color: white; border: 1px solid var(--ar-text-muted); }
+
+.ar-status-rp-badge { background-color: #fee2e2; color: var(--ar-status-rp-color); border: 1px solid #fca5a5; }
+.ar-status-st-badge { background-color: #fef3c7; color: var(--ar-status-st-color); border: 1px solid #fcd34d; }
+.ar-status-ed-badge { background-color: #dcfce7; color: var(--ar-status-ed-color); border: 1px solid #86efac; }
+.ar-status-default-badge { background-color: transparent; color: var(--ar-text-muted); border: 1px solid var(--ar-border-color); }

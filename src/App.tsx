@@ -5,18 +5,17 @@ import { URLayout } from './features/breakdown/URLayout';
 import BreakdownsPage from './features/breakdown/views/BreakdownsView';
 import LoginPage from './features/auth/views/LoginView';
 import MachineList from './features/breakdown/views/MachineList';
-import CreateBreakdown from './features/breakdown/views/CrateBreakDown';
-
+import CreateBreakdown from './features/breakdown/views/CrateBreakdown';
+import MachineHistoryView from './features/breakdown/views/MachineHistoryView';
+import BreakdownRaport from './features/breakdown/views/BreakdownRaport';
 
 function App() {
   return (
     <AuthProvider> 
       <Router>
         <Routes>
-          {/* Publiczne trasy */}
           <Route path="/login" element={<LoginPage />} />
 
-          {/* Automatyczne przekierowania */}
           <Route path="/" element={<Navigate to="/ur/breakdowns" replace />} />
           <Route path="/breakdowns" element={<Navigate to="/ur/breakdowns" replace />} />
 
@@ -24,7 +23,9 @@ function App() {
             <Route path="/ur" element={<URLayout />}>
               <Route path="breakdowns" element={<BreakdownsPage />} />
               <Route path="machines" element={<MachineList />} />
+              <Route path="machines/:id/history" element={<MachineHistoryView />} />
               <Route path="create-breakdown" element={<CreateBreakdown />} />
+              <Route path="breakdown-raport" element={<BreakdownRaport />} />
             </Route>
           </Route>
 
