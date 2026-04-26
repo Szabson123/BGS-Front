@@ -18,6 +18,7 @@ interface CalendarDay {
   date: Date;
   dayNumber: number;
   isToday: boolean;
+  isCurrentMonth?: boolean;
 }
 
 // Dane testowe z nakładającymi się godzinami (np. id 1, 8 i 9 w poniedziałek)
@@ -165,17 +166,22 @@ export const ReviewCalendar: React.FC<ReviewCalendarProps> = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentTime, setCurrentTime] = useState<Date>(new Date());
-  const [viewDate, setViewDate] = useState<Date>(new Date("2026-04-20"));
 
   const calendarType = searchParams.get("type") || "week";
+  const dateParam = searchParams.get("date");
+  const viewDate = dateParam ? new Date(dateParam) : new Date();
   const HOURS = Array.from({ length: 24 }, (_, i) => i);
 
   const handleNavigate = (direction: "next" | "prev") => {
     const newDate = new Date(viewDate);
-    newDate.setDate(viewDate.getDate() + (direction === "next" ? 7 : -7));
-    setViewDate(newDate);
-  };
+    if (calendarType === "week")
+      newDate.setDate(viewDate.getDate() + (direction === "next" ? 7 : -7));
+    if (calendarType === "month")
+      newDate.setDate(viewDate.getDate() + (direction === "next" ? 30 : -30));
 
+    const dateString = newDate.toISOString().split("T")[0];
+    updateURL("date", dateString);
+  };
   const updateURL = (key: string, value: string) => {
     const newParams = new URLSearchParams(searchParams);
     value ? newParams.set(key, value) : newParams.delete(key);
@@ -200,9 +206,55 @@ export const ReviewCalendar: React.FC<ReviewCalendarProps> = ({
     });
   };
 
+  const getCurrentMonth = (selectedDate: Date): CalendarDay[] => {
+    const days: CalendarDay[] = [];
+    const todayString = new Date().toDateString();
+
+    const firstDayOfMonth = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      1,
+    );
+    const lastDayOfMonth = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth() + 1,
+      0,
+    );
+
+    // Cofnięcie do poniedziałku
+    const startDayOfWeek = firstDayOfMonth.getDay();
+    const diffToMonday = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1;
+    const startDate = new Date(firstDayOfMonth);
+    startDate.setDate(firstDayOfMonth.getDate() - diffToMonday);
+
+    // Wyliczenie końca: musimy dociągnąć do niedzieli ostatniego tygodnia
+    const endDayOfWeek = lastDayOfMonth.getDay();
+    const diffToSunday = endDayOfWeek === 0 ? 0 : 7 - endDayOfWeek;
+    const endDate = new Date(lastDayOfMonth);
+    endDate.setDate(lastDayOfMonth.getDate() + diffToSunday);
+
+    // Generujemy dni od startDate do endDate
+    const tempDate = new Date(startDate);
+    tempDate.setHours(0, 0, 0, 0);
+
+    while (tempDate <= endDate) {
+      days.push({
+        date: new Date(tempDate),
+        dayNumber: tempDate.getDate(),
+        isToday: tempDate.toDateString() === todayString,
+        isCurrentMonth: tempDate.getMonth() === selectedDate.getMonth(),
+      });
+      tempDate.setDate(tempDate.getDate() + 1);
+    }
+
+    return days;
+  };
+
   const currentWeekDays = getCurrentWeek(viewDate);
   const firstDay = currentWeekDays[0].date;
   const lastDay = currentWeekDays[6].date;
+
+  const currentMonthDays = getCurrentMonth(viewDate);
 
   const formatMonth = (d: Date) =>
     d.toLocaleDateString("pl-PL", { month: "long" });
@@ -272,7 +324,14 @@ export const ReviewCalendar: React.FC<ReviewCalendarProps> = ({
           />
         </div>
         <div className="rc-filters-days">
-          <span>{weekRangeDisplay}</span>
+          <span>
+            {calendarType === "week"
+              ? weekRangeDisplay
+              : getCurrentMonth(viewDate)[7].date.toLocaleDateString("pl-PL", {
+                  month: "long",
+                  year: "numeric",
+                })}
+          </span>
         </div>
         <div className="rc-type-select">
           {["week", "month"].map((type) => (
@@ -286,10 +345,12 @@ export const ReviewCalendar: React.FC<ReviewCalendarProps> = ({
           ))}
         </div>
       </header>
-      <div className="rc-top">
+      <div className={`rc-top ${calendarType === "week" ? "before" : ""}`}>
         {currentWeekDays.map((d, i) => (
           <div key={i} className={`rc-top-day ${d.isToday ? "selected" : ""}`}>
-            <span className="rc-day">{d.dayNumber}</span>
+            {calendarType === "week" && (
+              <span className="rc-day">{d.dayNumber}</span>
+            )}
             <span className="rc-week-day">
               {d.date
                 .toLocaleDateString("pl-PL", { weekday: "long" })
@@ -298,62 +359,80 @@ export const ReviewCalendar: React.FC<ReviewCalendarProps> = ({
           </div>
         ))}
       </div>
-      <div className="rc-day-grid-wrapper">
-        <div className="rc-hours-label">
-          {HOURS.map((h) => (
-            <div key={h} className="rc-hour">
-              <span>{h}:00</span>
-            </div>
-          ))}
-        </div>
-        <div className="rc-grid-wrapper">
-          {HOURS.map((h) => (
-            <div key={h} className="rc-row" />
-          ))}
-          {Array.from({ length: 8 }).map((_, i) => (
+      <div
+        className={`rc-day-grid-wrapper ${calendarType === "month" ? "month" : ""}`}
+      >
+        {calendarType === "week" && (
+          <div className="rc-hours-label">
+            {HOURS.map((h) => (
+              <div key={h} className="rc-hour">
+                <span>{h}:00</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {calendarType === "week" && (
+          <div className="rc-grid-wrapper">
+            {HOURS.map((h) => (
+              <div key={h} className="rc-row" />
+            ))}
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
+                key={i}
+                className="rc-vertical-line"
+                style={{ left: `${(i / 7) * 100}%` }}
+              />
+            ))}
             <div
-              key={i}
-              className="rc-vertical-line"
-              style={{ left: `${(i / 7) * 100}%` }}
+              className="rc-current-time-line"
+              style={{
+                top: currentTime.getHours() * 60 + currentTime.getMinutes(),
+              }}
             />
-          ))}
-          <div
-            className="rc-current-time-line"
-            style={{
-              top: currentTime.getHours() * 60 + currentTime.getMinutes(),
-            }}
-          />
-          {currentWeekDays.map((day, dayIdx) => {
-            const dayEvents = MOCK_BREAKDOWNS.filter((item) => {
-              const d = new Date(item.startTime);
-              return d.toDateString() === day.date.toDateString();
-            });
+            {currentWeekDays.map((day, dayIdx) => {
+              const dayEvents = MOCK_BREAKDOWNS.filter((item) => {
+                const d = new Date(item.startTime);
+                return d.toDateString() === day.date.toDateString();
+              });
 
-            const positioned = getPositionedEventsForDay(dayEvents);
+              const positioned = getPositionedEventsForDay(dayEvents);
 
-            return positioned.map((item) => {
-              const baseWidth = 100 / 7;
-              const subWidth = baseWidth / item.totalCols;
-              const leftPos = dayIdx * baseWidth + item.colIdx * subWidth;
+              return positioned.map((item) => {
+                const baseWidth = 100 / 7;
+                const subWidth = baseWidth / item.totalCols;
+                const leftPos = dayIdx * baseWidth + item.colIdx * subWidth;
 
-              return (
-                <ReviewCalendarElement
-                  key={item.id}
-                  start={new Date(item.startTime)}
-                  end={new Date(item.endTime)}
-                  name={item.machineName}
-                  firstName={item.requesterFirstName}
-                  lastName={item.requesterLastName}
-                  width={subWidth}
-                  styleOverride={{
-                    left: `${leftPos}%`,
-                    width: `${subWidth}%`,
-                  }}
-                />
-              );
-            });
-          })}
-        </div>
+                return (
+                  <ReviewCalendarElement
+                    key={item.id}
+                    start={new Date(item.startTime)}
+                    end={new Date(item.endTime)}
+                    name={item.machineName}
+                    firstName={item.requesterFirstName}
+                    lastName={item.requesterLastName}
+                    width={subWidth}
+                    styleOverride={{
+                      left: `${leftPos}%`,
+                      width: `${subWidth}%`,
+                    }}
+                  />
+                );
+              });
+            })}
+          </div>
+        )}
+        {calendarType === "month" && (
+          <div className="rc-month-grid">
+            {currentMonthDays.map((d, i) => (
+              <div
+                key={i}
+                className={`rc-month-cell ${!d.isCurrentMonth ? "grey" : ""} ${d.isToday ? "today" : ""}`}
+              >
+                {d.dayNumber}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

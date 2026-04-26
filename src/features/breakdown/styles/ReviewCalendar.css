@@ -1,5 +1,3 @@
-/* ReviewCalendar.css */
-
 .rc-wrapper {
   font-family: "Poppins", sans-serif;
   background-color: var(--bd-card-bg);
@@ -79,14 +77,17 @@
 /* TOP BAR - Daty i dni tygodnia */
 .rc-top {
   display: grid;
-  grid-template-columns: 80px repeat(7, 1fr); /* 80px na etykiety godzin */
+  grid-template-columns: repeat(7, 1fr);
   background-color: #ffffff;
   border-bottom: 1px solid var(--bd-border-color);
   margin-left: 0;
+  &.before{
+    grid-template-columns: 80px repeat(7, 1fr);
+  }
 }
 
 /* Pusty narożnik nad godzinami */
-.rc-top::before {
+.rc-top.before::before {
   content: "";
   border-right: 1px solid var(--bd-border-color);
 }
@@ -131,6 +132,11 @@
   overflow-y: auto;
   max-height: 700px; /* Stała wysokość kalendarza */
   scrollbar-width: none;
+  &.month{
+    display: block;
+    overflow-y: visible;
+    max-height: 740px;
+  }
 }
 
 /* Kolumna z godzinami */
@@ -236,5 +242,31 @@
     height: 5px;
     border-radius: 50%;
     background-color: rgb(255, 45, 8);
+  }
+}
+
+/* month */
+
+.rc-month-grid{
+  display: grid;
+  width: 100%;
+  height: 1000px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  max-height: 740px;
+}
+.rc-month-cell{
+  border: 1px solid var(--bd-border-color);
+  padding: 10px;
+  font-size: 22px;
+  color: var(--bd-text-main);
+  font-weight: 600;
+  &.grey{
+    color: var(--bd-text-muted);
+    font-weight: 300;
+  }
+  &.today{
+    border: 2px solid var(--bd-primary-blue);
+    color: var(--bd-primary-blue);
   }
 }
