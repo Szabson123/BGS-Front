@@ -102,7 +102,7 @@ export const BreakdownTable: React.FC<BreakdownTableProps> = ({ data, isLoading,
               ? `${item.reporter.first_name} ${item.reporter.last_name}`.trim() 
               : 'System';
             const changerName = item.latest_status.user.first_name 
-              ? `${item.latest_status.user.first_name} ${item.latest_status.user.last_name}`.trim() 
+              ? `${item.latest_status.user.first_name} ${item.latest_status.user.last_name}`.trim()
               : 'System_Auto';
 
             const statusDescription = item.latest_status.description || '-';
