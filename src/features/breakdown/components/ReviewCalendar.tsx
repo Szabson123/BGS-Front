@@ -448,7 +448,7 @@ export const ReviewCalendar: React.FC<ReviewCalendarProps> = ({
                   </div>
 
                   <div className="rc-month-events-container">
-                    {dayEvents.slice(0, 3).map((e) => (
+                    {dayEvents.slice(0, 2).map((e) => (
                       <div key={e.id} className="rc-month-event-strip">
                         <span className="rc-event-dot"></span>
                         <span className="rc-event-name">{e.machineName}</span>
@@ -466,9 +466,9 @@ export const ReviewCalendar: React.FC<ReviewCalendarProps> = ({
                         </span>
                       </div>
                     ))}
-                    {dayEvents.length > 3 && (
+                    {dayEvents.length > 2 && (
                       <div className="rc-month-more-events">
-                        + {dayEvents.length - 3} więcej
+                        + {dayEvents.length - 2} więcej
                       </div>
                     )}
                   </div>
