@@ -66,7 +66,15 @@ const MOCK_BREAKDOWNS = [
     startTime: "2026-04-20T09:00:00",
     endTime: "2026-04-20T12:00:00",
   },
-
+  {
+    id: 119,
+    machineName: "Frezarka Y",
+    requesterFirstName: "Ola",
+    requesterLastName: "As",
+    startTime: "2026-04-20T09:00:00",
+    endTime: "2026-04-20T12:00:00",
+  },
+  
   {
     id: 2,
     machineName: "Wiertarka CNC",
@@ -423,14 +431,50 @@ export const ReviewCalendar: React.FC<ReviewCalendarProps> = ({
         )}
         {calendarType === "month" && (
           <div className="rc-month-grid">
-            {currentMonthDays.map((d, i) => (
-              <div
-                key={i}
-                className={`rc-month-cell ${!d.isCurrentMonth ? "grey" : ""} ${d.isToday ? "today" : ""}`}
-              >
-                {d.dayNumber}
-              </div>
-            ))}
+            {currentMonthDays.map((d, i) => {
+              // Filtrujemy awarie dla konkretnego dnia w pętli
+              const dayEvents = MOCK_BREAKDOWNS.filter((item) => {
+                const eventDate = new Date(item.startTime);
+                return eventDate.toDateString() === d.date.toDateString();
+              });
+
+              return (
+                <div
+                  key={i}
+                  className={`rc-month-cell ${!d.isCurrentMonth ? "grey" : ""} ${d.isToday ? "today" : ""}`}
+                >
+                  <div className="rc-month-day-header">
+                    <span>{d.dayNumber}</span>
+                  </div>
+
+                  <div className="rc-month-events-container">
+                    {dayEvents.slice(0, 3).map((e) => (
+                      <div key={e.id} className="rc-month-event-strip">
+                        <span className="rc-event-dot"></span>
+                        <span className="rc-event-name">{e.machineName}</span>
+                        {" "}
+                        <span className="rc-event-time">
+                          {new Date(e.startTime).toLocaleTimeString("pl-PL", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                          {" - "}
+                          {new Date(e.endTime).toLocaleTimeString("pl-PL", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                        </span>
+                      </div>
+                    ))}
+                    {dayEvents.length > 3 && (
+                      <div className="rc-month-more-events">
+                        + {dayEvents.length - 3} więcej
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

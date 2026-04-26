@@ -81,7 +81,7 @@
   background-color: #ffffff;
   border-bottom: 1px solid var(--bd-border-color);
   margin-left: 0;
-  &.before{
+  &.before {
     grid-template-columns: 80px repeat(7, 1fr);
   }
 }
@@ -132,7 +132,7 @@
   overflow-y: auto;
   max-height: 700px; /* Stała wysokość kalendarza */
   scrollbar-width: none;
-  &.month{
+  &.month {
     display: block;
     overflow-y: visible;
     max-height: 740px;
@@ -222,7 +222,7 @@
 }
 
 @keyframes showUp {
-  to{
+  to {
     opacity: 1;
   }
 }
@@ -233,7 +233,7 @@
   height: 2px;
   background-color: rgb(255, 45, 8);
   z-index: 11;
-  &::before{
+  &::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -247,7 +247,7 @@
 
 /* month */
 
-.rc-month-grid{
+.rc-month-grid {
   display: grid;
   width: 100%;
   height: 1000px;
@@ -255,18 +255,64 @@
   grid-template-rows: repeat(6, 1fr);
   max-height: 740px;
 }
-.rc-month-cell{
+.rc-month-cell {
   border: 1px solid var(--bd-border-color);
   padding: 10px;
   font-size: 22px;
   color: var(--bd-text-main);
   font-weight: 600;
-  &.grey{
+  &.grey {
     color: var(--bd-text-muted);
     font-weight: 300;
   }
-  &.today{
+  &.today {
     border: 2px solid var(--bd-primary-blue);
     color: var(--bd-primary-blue);
   }
+}
+.rc-month-cell {
+  display: flex;
+  flex-direction: column;
+  min-height: 120px; /* Stała wysokość komórki */
+  overflow: hidden;
+}
+
+.rc-month-day-header {
+  margin-bottom: 4px;
+}
+
+.rc-month-events-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rc-month-event-strip {
+  background-color: var(
+    --bd-primary-blue-light,
+    #e3f2fd
+  ); /* Przykładowy kolor */
+  border-left: 3px solid var(--bd-primary-blue, #2196f3);
+  padding: 2px 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 2px;
+  color: var(--bd-text-main);
+  cursor: pointer;
+}
+
+.rc-event-name {
+  font-weight: 500;
+}
+
+.rc-month-more-events {
+  font-size: 10px;
+  color: var(--bd-text-muted);
+  padding-left: 4px;
+  font-weight: bold;
+}
+.rc-event-time{
+  font-weight: 700;
 }
