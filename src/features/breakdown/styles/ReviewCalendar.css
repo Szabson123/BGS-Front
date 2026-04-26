@@ -273,7 +273,6 @@
 .rc-month-cell {
   display: flex;
   flex-direction: column;
-  min-height: 120px; /* Stała wysokość komórki */
   overflow: hidden;
 }
 
