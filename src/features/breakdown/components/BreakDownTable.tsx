@@ -101,9 +101,11 @@ export const BreakdownTable: React.FC<BreakdownTableProps> = ({ data, isLoading,
             const reporterName = item.reporter.first_name 
               ? `${item.reporter.first_name} ${item.reporter.last_name}`.trim() 
               : 'System';
-            const changerName = item.latest_status.user.first_name 
-              ? `${item.latest_status.user.first_name} ${item.latest_status.user.last_name}`.trim()
-              : 'System_Auto';
+            const changerName = item.latest_status.status === 'RP'
+              ? '-'
+              : (item.latest_status.user.first_name 
+                  ? `${item.latest_status.user.first_name} ${item.latest_status.user.last_name}`.trim()
+                  : 'System_Auto');
 
             const statusDescription = item.latest_status.description || '-';
             

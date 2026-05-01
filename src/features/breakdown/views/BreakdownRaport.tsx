@@ -171,16 +171,15 @@ export const BreakdownRaport: React.FC = () => {
         {/* TABELA GRID */}
         <div className="ar-ticket-list">
           <div className="ar-ticket-header">
-            <div>Maszyna</div>
-            <div>Alias</div>
-            <div>Zgłoszono</div>
-            <div>Priorytet</div>
+            <div>Maszyna / Alias</div>
+            <div className="ar-centered">Zgłoszono</div>
+            <div className="ar-centered">Priorytet</div>
             <div>Zgłaszający</div>
             <div>Opis usterki</div>
-            <div>Status</div>
+            <div className="ar-centered">Status</div>
             <div>Opis z naprawy</div>
             <div>Opis końcowy</div>
-            <div>Rozpoczęto</div>
+            <div className="ar-centered">Rozpoczęto</div>
             <div>Kto zamknął</div>
             <div>Interweniował</div>
             <div>Trwało</div>
@@ -201,26 +200,59 @@ export const BreakdownRaport: React.FC = () => {
 
             const isLastElement = items.length === index + 1;
 
+            // -- ROZDZIELENIE DATY I GODZINY DLA "ZGŁOSZONO" --
+            const addedDateObj = new Date(item.date_added);
+            const addedDate = addedDateObj.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const addedTime = addedDateObj.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+
+            // -- ROZDZIELENIE DATY I GODZINY DLA "ROZPOCZĘTO" --
+            const startedDateObj = started ? new Date(started.time) : null;
+            const startedDate = startedDateObj ? startedDateObj.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-';
+            const startedTime = startedDateObj ? startedDateObj.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : '';
+
             return (
               <div 
                 key={item.id} 
                 className="ar-ticket-card" 
                 ref={isLastElement ? lastElementRef : null}
               >
-                <div className="ar-machine-name">{item.machine.name}</div>
-                <div className="ar-person" style={{ color: 'var(--ar-text-muted)' }}>{item.machine.alias || '-'}</div>
+                <div className="ar-machine-info">
+                  <div className="ar-machine-name">{item.machine.name}</div>
+                  {item.machine.alias && (
+                    <div style={{ color: 'var(--ar-text-muted)', fontSize: '0.85em', marginTop: '2px' }}>
+                      {item.machine.alias}
+                    </div>
+                  )}
+                </div>
                 
-                <div className="ar-time">{formatShortDate(item.date_added)}</div>
-                <div><span className={`ar-badge ${prio.class}`}>{prio.label}</span></div>
+                {/* ZGŁOSZONO WYŚRODKOWANE W DWÓCH LINIACH */}
+                <div className="ar-time ar-centered">
+                  <div>{addedDate}</div>
+                  <div style={{ fontSize: '0.9em', color: 'var(--ar-text-muted)' }}>{addedTime}</div>
+                </div>
+                
+                <div className="ar-centered">
+                  <span className={`ar-badge ${prio.class}`}>{prio.label}</span>
+                </div>
+                
                 <div className="ar-person">{reporterName}</div>
                 
-                <div className="ar-description" title={item.description}>{item.description}</div>
-                <div><span className={`ar-badge ${status.class}`}>{status.label}</span></div>
+                {/* OPISY JUŻ SIĘ NIE UCINAJĄ DZIĘKI ZMIANOM W CSS */}
+                <div className="ar-description">{item.description}</div>
                 
-                <div className="ar-description" title={started?.description || '-'}>{started?.description || '-'}</div>
-                <div className="ar-description" title={ended?.description || '-'}>{ended?.description || '-'}</div>
+                <div className="ar-centered">
+                  <span className={`ar-badge ${status.class}`}>{status.label}</span>
+                </div>
                 
-                <div className="ar-time">{started ? formatShortDate(started.time) : '-'}</div>
+                <div className="ar-description">{started?.description || '-'}</div>
+                <div className="ar-description">{ended?.description || '-'}</div>
+                
+                {/* ROZPOCZĘTO WYŚRODKOWANE W DWÓCH LINIACH */}
+                <div className="ar-time ar-centered">
+                  <div>{startedDate}</div>
+                  {startedTime && <div style={{ fontSize: '0.9em', color: 'var(--ar-text-muted)' }}>{startedTime}</div>}
+                </div>
+                
                 <div className="ar-person">{closerName}</div>
                 <div className="ar-person">{intervenorName}</div>
                 
