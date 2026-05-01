@@ -34,7 +34,7 @@ interface ApiResponse {
 const getPriorityConfig = (priority: string) => {
   switch (priority) {
     case 'HIGH': return { label: 'Wysoki', class: 'ar-prio-wysoki' };
-    case 'MEDIUM': return { label: 'Średni', class: 'ar-prio-sredni' };
+    case 'MID': return { label: 'Średni', class: 'ar-prio-sredni' };
     case 'LOW': return { label: 'Niski', class: 'ar-prio-niski' };
     default: return { label: 'Brak', class: 'ar-prio-brak' };
   }
@@ -162,8 +162,7 @@ export const BreakdownRaport: React.FC = () => {
           <select name="priority" value={filters.priority} onChange={handleFilterChange} style={{ padding: '8px', borderRadius: '4px', border: '1px solid var(--ar-border-color)' }}>
             <option value="">Priorytety (Wszystkie)</option>
             <option value="HIGH">Wysoki</option>
-            <option value="MEDIUM">Średni</option>
-            <option value="LOW">Niski</option>
+            <option value="MID">Średni</option>
             <option value="NONE">Brak</option>
           </select>
         </div>

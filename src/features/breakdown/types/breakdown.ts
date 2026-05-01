@@ -15,13 +15,13 @@ export interface LatestStatus {
   status: string;
   user: User;
   description: string | null;
-  time?: string | null;
+  created_at?: string | null;
 }
 
 export interface Breakdown {
   id: number;
   machine: Machine;
-  date_added: string;
+  created_at: string;
   priority: 'LOW' | 'MID' | 'HIGH' | 'NONE';
   reporter: User;
   description: string;

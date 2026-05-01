@@ -11,7 +11,7 @@ interface BreakdownTableProps {
 const getPriorityConfig = (priority: string) => {
   switch (priority) {
     case 'HIGH': return { label: 'Wysoki', class: 'bd-prio-wysoki' };
-    case 'MEDIUM': return { label: 'Średni', class: 'bd-prio-sredni' };
+    case 'MID': return { label: 'Średni', class: 'bd-prio-sredni' };
     case 'LOW': return { label: 'Niski', class: 'bd-prio-niski' };
     default: return { label: 'Brak', class: 'bd-prio-brak' };
   }
@@ -86,11 +86,11 @@ export const BreakdownTable: React.FC<BreakdownTableProps> = ({ data, isLoading,
             const prio = getPriorityConfig(item.priority);
             const status = getStatusConfig(item.latest_status.status);
 
-            const dateAddedObj = new Date(item.date_added);
+            const dateAddedObj = new Date(item.created_at);
             const addedDate = dateAddedObj.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const addedTime = dateAddedObj.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
 
-            const statusDateObj = item.latest_status.time ? new Date(item.latest_status.time) : null;
+            const statusDateObj = item.latest_status.created_at ? new Date(item.latest_status.created_at) : null;
             const statusDate = statusDateObj 
               ? statusDateObj.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' }) 
               : '-';
@@ -109,7 +109,7 @@ export const BreakdownTable: React.FC<BreakdownTableProps> = ({ data, isLoading,
 
             const statusDescription = item.latest_status.description || '-';
             
-            const durationStr = calculateDuration(item.date_added, item.latest_status.status, item.latest_status.time);
+            const durationStr = calculateDuration(item.created_at, item.latest_status.status, item.latest_status.created_at);
 
             return (
               <div 
