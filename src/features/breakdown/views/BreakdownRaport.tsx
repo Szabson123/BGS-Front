@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '../styles/BreakdownRaport.css';
+import { BreakdownPdfGenerator } from './BreakdownPdfGenerator';
+
+interface MachineHelper {
+  id: number;
+  name: string;
+  alias: string;
+}
 
 interface User {
   id: number;
@@ -73,11 +80,32 @@ export const BreakdownRaport: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Stan dla listy maszyn z helpera
+  const [machines, setMachines] = useState<MachineHelper[]>([]);
+
   const [filters, setFilters] = useState({
-    search: '', status: '', priority: '', date_after: '', date_before: ''
+    search: '', 
+    status: '', 
+    priority: '', 
+    date_after: '', 
+    date_before: '',
+    machine: '' // Dodany klucz do filtrów
   });
 
   const observer = useRef<IntersectionObserver | null>(null);
+
+  // Pobieranie listy maszyn (helper)
+  const fetchMachinesHelper = async () => {
+    try {
+      const response = await fetch('/api/machines/create/break-down/machine-list/helper/');
+      if (response.ok) {
+        const data = await response.json();
+        setMachines(data);
+      }
+    } catch (err) {
+      console.error("Błąd podczas pobierania listy maszyn:", err);
+    }
+  };
 
   const fetchBreakdowns = async (currentPage: number, currentFilters: typeof filters, resetItems = false) => {
     if (isLoading) return;
@@ -93,6 +121,8 @@ export const BreakdownRaport: React.FC = () => {
       if (currentFilters.priority) params.append('priority', currentFilters.priority);
       if (currentFilters.date_after) params.append('date_range_after', currentFilters.date_after);
       if (currentFilters.date_before) params.append('date_range_before', currentFilters.date_before);
+      // Dodanie parametru machine do zapytania
+      if (currentFilters.machine) params.append('machine', currentFilters.machine);
 
       const response = await fetch(`/api/machines/all-break-downs-to-report/?${params.toString()}`);
       if (!response.ok) throw new Error('Błąd podczas pobierania danych');
@@ -108,6 +138,11 @@ export const BreakdownRaport: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  // Pobierz maszyny raz przy montowaniu komponentu
+  useEffect(() => {
+    fetchMachinesHelper();
+  }, []);
 
   useEffect(() => {
     setPage(1);
@@ -145,6 +180,17 @@ export const BreakdownRaport: React.FC = () => {
         
         <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
           <input type="text" name="search" placeholder="Szukaj..." value={filters.search} onChange={handleFilterChange} style={{ padding: '8px', borderRadius: '4px', border: '1px solid var(--ar-border-color)' }} />
+          
+          {/* NOWY FILTR: Maszyny */}
+          <select name="machine" value={filters.machine} onChange={handleFilterChange} style={{ padding: '8px', borderRadius: '4px', border: '1px solid var(--ar-border-color)', maxWidth: '200px' }}>
+            <option value="">Wszystkie maszyny</option>
+            {machines.map(m => (
+              <option key={m.id} value={m.id}>
+                {m.name} {m.alias ? `(${m.alias})` : ''}
+              </option>
+            ))}
+          </select>
+
           <select name="status" value={filters.status} onChange={handleFilterChange} style={{ padding: '8px', borderRadius: '4px', border: '1px solid var(--ar-border-color)' }}>
             <option value="">Statusy (Wszystkie)</option>
             <option value="RP">Oczekujące</option>
@@ -155,8 +201,10 @@ export const BreakdownRaport: React.FC = () => {
             <option value="">Priorytety (Wszystkie)</option>
             <option value="HIGH">Wysoki</option>
             <option value="MID">Średni</option>
+            <option value="LOW">Niski</option>
             <option value="NONE">Brak</option>
           </select>
+          <BreakdownPdfGenerator filters={filters} />
         </div>
 
         <div className="ar-ticket-list">
