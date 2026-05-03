@@ -83,16 +83,13 @@
     position: relative; 
 }
 
-.ar-ticket-header > div::after, .ar-ticket-card > div::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 70%;
-    width: 1px;
-    background-color: rgba(0, 0, 0, 0.20);
+.ar-ticket-header > div, .ar-ticket-card > div {
+    &:not(:last-child){
+        border-right: 1px solid rgb(223, 223, 223);
+        height: 100%;
+    }
 }
+
 .ar-ticket-header {
     margin-left: 0;
     padding: 12px 10px;

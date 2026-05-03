@@ -11,13 +11,13 @@ interface HistoryItem {
   status: string;
   user: User;
   description: string | null;
-  time: string;
+  created_at: string;
 }
 
 interface Breakdown {
   id: number;
   machine: { id: number; name: string; alias: string | null };
-  date_added: string;
+  created_at: string;
   priority: string;
   reporter: User;
   description: string;
@@ -64,11 +64,6 @@ const calculateDuration = (startStr: string, endStr?: string) => {
   if (days > 0) return `${days}d ${hours}h ${mins}m`;
   if (hours > 0) return `${hours}h ${mins}m`;
   return `${mins}m`;
-};
-
-const formatShortDate = (dateStr: string) => {
-  const d = new Date(dateStr);
-  return d.toLocaleString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 };
 
 export const BreakdownRaport: React.FC = () => {
@@ -118,12 +113,10 @@ export const BreakdownRaport: React.FC = () => {
     setPage(1);
     setHasMore(true);
     fetchBreakdowns(1, filters, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   useEffect(() => {
     if (page > 1) fetchBreakdowns(page, filters, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const lastElementRef = useCallback((node: HTMLDivElement | null) => {
@@ -150,7 +143,6 @@ export const BreakdownRaport: React.FC = () => {
         
         <h2 className="ar-header-title">Raport Zgłoszeń UR</h2>
         
-        {/* FILTRY */}
         <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
           <input type="text" name="search" placeholder="Szukaj..." value={filters.search} onChange={handleFilterChange} style={{ padding: '8px', borderRadius: '4px', border: '1px solid var(--ar-border-color)' }} />
           <select name="status" value={filters.status} onChange={handleFilterChange} style={{ padding: '8px', borderRadius: '4px', border: '1px solid var(--ar-border-color)' }}>
@@ -167,7 +159,6 @@ export const BreakdownRaport: React.FC = () => {
           </select>
         </div>
 
-        {/* TABELA GRID */}
         <div className="ar-ticket-list">
           <div className="ar-ticket-header">
             <div>Maszyna / Alias</div>
@@ -199,13 +190,11 @@ export const BreakdownRaport: React.FC = () => {
 
             const isLastElement = items.length === index + 1;
 
-            // -- ROZDZIELENIE DATY I GODZINY DLA "ZGŁOSZONO" --
-            const addedDateObj = new Date(item.date_added);
+            const addedDateObj = new Date(item.created_at);
             const addedDate = addedDateObj.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const addedTime = addedDateObj.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
 
-            // -- ROZDZIELENIE DATY I GODZINY DLA "ROZPOCZĘTO" --
-            const startedDateObj = started ? new Date(started.time) : null;
+            const startedDateObj = started ? new Date(started.created_at) : null;
             const startedDate = startedDateObj ? startedDateObj.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-';
             const startedTime = startedDateObj ? startedDateObj.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' }) : '';
 
@@ -224,7 +213,6 @@ export const BreakdownRaport: React.FC = () => {
                   )}
                 </div>
                 
-                {/* ZGŁOSZONO WYŚRODKOWANE W DWÓCH LINIACH */}
                 <div className="ar-time ar-centered">
                   <div>{addedDate}</div>
                   <div style={{ fontSize: '0.9em', color: 'var(--ar-text-muted)' }}>{addedTime}</div>
@@ -236,7 +224,6 @@ export const BreakdownRaport: React.FC = () => {
                 
                 <div className="ar-person">{reporterName}</div>
                 
-                {/* OPISY JUŻ SIĘ NIE UCINAJĄ DZIĘKI ZMIANOM W CSS */}
                 <div className="ar-description">{item.description}</div>
                 
                 <div className="ar-centered">
@@ -246,7 +233,6 @@ export const BreakdownRaport: React.FC = () => {
                 <div className="ar-description">{started?.description || '-'}</div>
                 <div className="ar-description">{ended?.description || '-'}</div>
                 
-                {/* ROZPOCZĘTO WYŚRODKOWANE W DWÓCH LINIACH */}
                 <div className="ar-time ar-centered">
                   <div>{startedDate}</div>
                   {startedTime && <div style={{ fontSize: '0.9em', color: 'var(--ar-text-muted)' }}>{startedTime}</div>}
@@ -255,13 +241,12 @@ export const BreakdownRaport: React.FC = () => {
                 <div className="ar-person">{closerName}</div>
                 <div className="ar-person">{intervenorName}</div>
                 
-                <div className="ar-duration">{calculateDuration(item.date_added, ended?.time)}</div>
+                <div className="ar-duration">{calculateDuration(item.created_at, ended?.created_at)}</div>
               </div>
             );
           })}
         </div>
 
-        {/* LOADER */}
         <div style={{ textAlign: 'center', padding: '20px', color: 'var(--ar-text-muted)' }}>
           {isLoading && <span>Pobieranie danych...</span>}
           {!hasMore && items.length > 0 && !error && <span>Koniec danych.</span>}

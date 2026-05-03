@@ -221,3 +221,127 @@
     color: var(--bd-text-muted); 
     border: 1px solid var(--bd-border-color); 
 }
+
+/* --- MODAL --- */
+.bd-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  
+  /* Logika Fading-u */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.bd-modal-overlay.bd-modal-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.bd-modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  color: #333;
+  text-align: center;
+  
+  /* Animacja okienka */
+  transform: translateY(-20px) scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.bd-modal-overlay.bd-modal-open .bd-modal-content {
+  transform: translateY(0) scale(1);
+}
+
+.bd-modal-title {
+  margin-top: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.bd-modal-text {
+  margin-bottom: 25px;
+  color: #666;
+}
+
+.bd-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.bd-modal-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+  min-width: 120px;
+}
+
+.bd-modal-btn-cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.bd-modal-btn-cancel:hover {
+  background-color: #d0d0d0;
+}
+
+.bd-modal-btn-confirm {
+  background-color: #007bff; 
+  color: #fff;
+}
+
+.bd-modal-btn-confirm:hover {
+  background-color: #0069d9;
+}
+
+.bd-form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.bd-form-group label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.bd-form-control {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.bd-form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+}
+
+textarea.bd-form-control {
+  resize: vertical;
+}
